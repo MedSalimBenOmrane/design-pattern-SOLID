@@ -1,19 +1,18 @@
-package com.directi.training.ocp.exercise_refactored;
-public class SpaceSlotStrategy implements ResourceStrategy {
+public class SpaceSlotStrategy implements Resource {
     @Override
-    public int markResourceBusy(int resourceId) {
-        // Logique pour marquer un espace comme occupé
-        return resourceId;
+    public boolean isFreeResource(int resourceId) {
+        // Implementation details to check if the space slot is free
+        return true; // Placeholder
+    }
+
+    @Override
+    public void markResourceBusy(int resourceId) {
+        // Mark the space slot as occupied
     }
 
     @Override
     public void markResourceFree(int resourceId) {
-        // Logique pour libérer un espace
+        // Mark the space slot as free
     }
 
-    @Override
-    public int findFreeResource() {
-        // Trouver un espace libre
-        return 0;  // Supposons que 0 est un ID valide pour la démonstration
-    }
 }

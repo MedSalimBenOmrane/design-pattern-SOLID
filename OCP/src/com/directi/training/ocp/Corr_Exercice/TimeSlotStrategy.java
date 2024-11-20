@@ -1,18 +1,17 @@
-public class TimeSlotStrategy implements ResourceStrategy {
+public class TimeSlotStrategy implements Resource {
     @Override
-    public int markResourceBusy(int resourceId) {
-        // Logique pour marquer un créneau horaire comme occupé
-        return resourceId;
+    public boolean isFreeResource(int resourceId) {
+        // Implementation details to check if the time slot is free
+        return true; // Placeholder
+    }
+
+    @Override
+    public void markResourceBusy(int resourceId) {
+        // Mark the time slot as occupied
     }
 
     @Override
     public void markResourceFree(int resourceId) {
-        // Logique pour libérer un créneau horaire
-    }
-
-    @Override
-    public int findFreeResource() {
-        // Trouver un créneau horaire libre
-        return 0;  // Supposons que 0 est un ID valide pour la démonstration
+        // Mark the time slot as free
     }
 }
