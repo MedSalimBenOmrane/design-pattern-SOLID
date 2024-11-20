@@ -1,0 +1,15 @@
+
+Problème dans la première figure (Avant la refonte)
+Dans la première figure, la classe ResourceAllocator utilise une structure de contrôle switch pour gérer l'allocation et la libération de différentes types de ressources (TIME_SLOT et SPACE_SLOT). Ce design pose plusieurs problèmes liés au Principe d'Ouverture/Fermeture (OCP):
+
+Manque de flexibilité : Chaque fois qu'un nouveau type de ressource est ajouté ou qu'une logique spécifique à un type de ressource doit être modifiée, la classe ResourceAllocator doit être ouverte et modifiée. Cela entraîne un risque accru d'introduire des erreurs dans un code existant qui est autrement stable.
+Couplage fort : La classe est fortement couplée aux implémentations spécifiques de gestion de chaque type de ressource. Elle doit connaître et gérer les détails de chaque ressource, ce qui rend le système moins modulaire et plus difficile à gérer à mesure qu'il évolue.
+Répétition du code : Les opérations de marquage des ressources comme occupées ou libres sont très similaires entre les types de ressources, menant à une duplication du code qui pourrait être autrement centralisée.
+Correction dans la deuxième figure (Après la refonte)
+La deuxième figure montre une conception refondue qui corrige ces problèmes en appliquant le principe de stratégie, ce qui améliore la conformité au principe d'ouverture/fermeture :
+
+Délégation des responsabilités : ResourceAllocator délègue la logique de gestion spécifique des ressources à des classes stratégiques (TimeSlotStrategy et SpaceSlotStrategy). Chaque stratégie implémente l'interface ResourceStrategy qui définit des méthodes pour marquer les ressources comme occupées ou libres, et pour trouver une ressource libre.
+Réduction du couplage : ResourceAllocator ne dépend plus directement des détails de gestion des ressources. Il utilise une instance de ResourceStrategy, ce qui réduit le couplage entre le gestionnaire de ressources et les types spécifiques de ressources. Cela signifie que de nouveaux types de ressources peuvent être ajoutés sans modifier ResourceAllocator.
+Extensibilité améliorée : Ajouter un nouveau type de ressource devient aussi simple que créer une nouvelle stratégie sans modifier le code existant. Cela respecte l'OCP en permettant l'extension des fonctionnalités du système sans modification du code existant.
+Cohérence du code : Les opérations répétitives de gestion des ressources sont encapsulées dans les classes stratégiques, éliminant la duplication et centralisant la gestion des ressources dans des emplacements dédiés.
+En résumé, la deuxième figure montre une architecture où ResourceAllocator fonctionne comme un façade qui ne fait que rediriger les appels aux objets de stratégie appropriés, chaque objet de stratégie étant responsable de gérer un type spécifique de ressource. Cette approche améliore la maintenance, l'extensibilité, et la flexibilité du code en conformité avec l'OCP.
